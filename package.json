@@ -1,20 +1,22 @@
 {
   "name": "reaves",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A Javascript implementation of the Entity-Attribute-Value model and the event sourcing pattern for Node.js",
   "main": "lib/index.js",
   "scripts": {
-    "redis:start": "docker run --detach --name reaves --publish 6379:6379 redis",
+    "redis:start": "docker run --detach --name reaves --publish 6379:6379 redis:2.8.9",
     "redis:stop": "docker stop reaves; docker rm reaves",
     "test": "npm run redis:start && jest --runInBand; npm run redis:stop",
     "test:watch": "npm run redis:start && jest --runInBand --watch; npm run redis:stop",
-    "test:coverage": "npm run redis:start && jest --coverage --runInBand; npm run redis:stop"
+    "test:coverage": "npm run redis:start && jest --coverage --runInBand; npm run redis:stop",
+    "docs": "rimraf docs && jsdoc --configure jsdoc.json"
   },
   "keywords": [],
   "author": "Adriano Di Giovanni <me@adrianodigiovanni.com> (http://adrianodigiovanni.com/)",
   "license": "MIT",
   "devDependencies": {
     "async": "^2.6.1",
+    "docdash": "^1.0.0",
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-standard": "^12.0.0",
@@ -25,13 +27,26 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.1.1",
     "jest": "^23.6.0",
+    "jsdoc": "^3.5.5",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3",
     "randomstring": "^1.1.5",
     "redis": "^2.8.0",
+    "rimraf": "^2.6.2",
     "uuid": "^3.3.2"
   },
   "dependencies": {
     "luaload": "^0.1.0"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriano-di-giovanni/reaves.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adriano-di-giovanni/reaves/issues"
+  },
+  "homepage": "https://github.com/adriano-di-giovanni/reaves#readme"
 }

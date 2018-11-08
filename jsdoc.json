@@ -1,0 +1,17 @@
+{
+    "opts": {
+        "destination": "docs",
+        "template": "node_modules/docdash",
+        "recurse": true
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "source": {
+        "include": ["lib", "README.md"]
+    },
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": true
+    }
+}
