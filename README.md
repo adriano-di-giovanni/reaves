@@ -56,7 +56,7 @@ createEntityAttribute(client, entityName, attributeName, flags, (err, entityAttr
 
 ## API
 
-Please, refer to the API documentation [here](https://adriano-di-giovanni.github.io/reaves).
+Please, refer to the API documentation [here](https://adriano-di-giovanni.github.io/reaves/).
 
 ## Requirements <a name="requirements"></a>
 
