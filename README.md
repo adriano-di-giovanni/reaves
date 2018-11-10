@@ -13,7 +13,7 @@ Please, refer to the [Installation](#installation), [Usage](#usage), [API](#api)
 ## Installation <a name="installation"></a>
 
 ```bash
-npm install reaves
+npm install reaves redis --save
 ```
 
 ## Usage <a name="usage"></a>
