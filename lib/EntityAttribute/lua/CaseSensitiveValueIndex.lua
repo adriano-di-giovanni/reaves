@@ -1,27 +1,27 @@
-local EntityIdIndex = {}
-EntityIdIndex.__index = EntityIdIndex
+local CaseSensitiveValueIndex = {}
+CaseSensitiveValueIndex.__index = CaseSensitiveValueIndex
 
-function EntityIdIndex:create(keyPrefix, memberSeparator)
+function CaseSensitiveValueIndex:create(keyPrefix, memberSeparator)
     local instance = {
-        key = keyPrefix .. ':EntityIdIndex',
+        key = keyPrefix .. ':CaseSensitiveValueIndex',
         memberSeparator = memberSeparator
     }
-    setmetatable(instance, EntityIdIndex)
+    setmetatable(instance, CaseSensitiveValueIndex)
     return instance
 end
 
-function EntityIdIndex:buildMember(entityId, value, createdAt)
+function CaseSensitiveValueIndex:buildMember(entityId, value, createdAt)
     local memberSeparator = self.memberSeparator
-    return createdAt .. memberSeparator .. entityId .. memberSeparator .. value
+    return createdAt .. memberSeparator .. value .. memberSeparator .. entityId
 end
 
-function EntityIdIndex:delete(entityId, value, createdAt)
-    local member = self:buildMember(entityId, createdAt, value)
+function CaseSensitiveValueIndex:delete(entityId, value, createdAt)
+    local member = self:buildMember(entityId, value, createdAt)
     return redis.call('ZREM', self.key, member)
 end
 
-function EntityIdIndex:getMostRecent(aEntityId, from, to)
-    local query = aEntityId
+function CaseSensitiveValueIndex:getMostRecent(value, from, to)
+    local query = value
     local isTerm = true
     local order = ORDER_DESCENDING
     local offset = 0
@@ -29,8 +29,9 @@ function EntityIdIndex:getMostRecent(aEntityId, from, to)
     local reply = self:searchRaw(query, isTerm, from, to, order, offset, count)
     local member = reply[1]
     local entityId = nil
-    local value = nil
     local createdAt = nil
+
+    value = nil
 
     if (member ~= nil) then
         entityId, value, createdAt = self:unbuildMember(member)
@@ -39,7 +40,7 @@ function EntityIdIndex:getMostRecent(aEntityId, from, to)
     return entityId, value, createdAt
 end
 
-function EntityIdIndex:searchRaw(aQuery, isTerm, from, to, order, offset, count)
+function CaseSensitiveValueIndex:searchRaw(aQuery, isTerm, from, to, order, offset, count)
     local query = aQuery
     local memberSeparator = self.memberSeparator
 
@@ -67,15 +68,22 @@ function EntityIdIndex:searchRaw(aQuery, isTerm, from, to, order, offset, count)
     return redis.call(command, self.key, min, max)
 end
 
-function EntityIdIndex:insert(entityId, value, createdAt)
+function CaseSensitiveValueIndex:insert(entityId, value, createdAt)
     local score = 0
     local member = self:buildMember(entityId, value, createdAt)
     return redis.call('ZADD', self.key, score, member)
 end
 
-function EntityIdIndex:unbuildMember(member)
+function CaseSensitiveValueIndex:unbuildMember(member)
     local memberSeparator = self.memberSeparator
-    local pattern = '^(%d+)' .. memberSeparator .. '(.+)' .. memberSeparator .. '(.+)$'
-    local createdAt, entityId, value = string.match(member, pattern)
+
+    local pattern
+    local entityId
+    local value
+    local createdAt
+
+    pattern = '^(%d+)' .. memberSeparator .. '(.+)' .. memberSeparator .. '(.+)$'
+    createdAt, value, entityId = string.match(member, pattern)
+
     return entityId, value, tonumber(createdAt, 10)
 end
