@@ -12,7 +12,7 @@ end
 
 function CaseSensitiveValueIndex:buildMember(entityId, value, createdAt)
     local memberSeparator = self.memberSeparator
-    return createdAt .. memberSeparator .. value .. memberSeparator .. entityId
+    return value .. memberSeparator .. createdAt .. memberSeparator .. entityId
 end
 
 function CaseSensitiveValueIndex:delete(entityId, value, createdAt)
@@ -53,12 +53,12 @@ function CaseSensitiveValueIndex:searchRaw(aQuery, isTerm, from, to, order, offs
     local max
     if (order == ORDER_ASCENDING) then
         command = 'ZRANGEBYLEX'
-        min = '[' .. from .. memberSeparator .. query
-        max = '[' .. to .. memberSeparator .. query .. TRAILING_BYTE
+        min = '[' .. query
+        max = '[' .. query .. TRAILING_BYTE
     else
         command = 'ZREVRANGEBYLEX'
-        min = '[' .. to .. memberSeparator .. query .. TRAILING_BYTE
-        max = '[' .. from .. memberSeparator .. query
+        min = '[' .. query .. TRAILING_BYTE
+        max = '[' .. query
     end
 
     if (offset ~= nil and count ~= nil) then
@@ -82,8 +82,8 @@ function CaseSensitiveValueIndex:unbuildMember(member)
     local value
     local createdAt
 
-    pattern = '^(%d+)' .. memberSeparator .. '(.+)' .. memberSeparator .. '(.+)$'
-    createdAt, value, entityId = string.match(member, pattern)
+    pattern = '^(.+)' .. memberSeparator .. '(%d+)' .. memberSeparator .. '(.+)$'
+    value, createdAt, entityId = string.match(member, pattern)
 
     return entityId, value, tonumber(createdAt, 10)
 end

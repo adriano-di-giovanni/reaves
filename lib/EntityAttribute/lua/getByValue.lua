@@ -3,7 +3,7 @@ local function getByValue(keyPrefix, isCaseSensitive, memberSeparator, value, fr
     if (isCaseSensitive) then
         gateway = CaseSensitiveValueIndex:create(keyPrefix, memberSeparator)
     else
-        gateway = CaseSensitiveValueIndex:create(keyPrefix, memberSeparator)
+        gateway = CaseInsensitiveValueIndex:create(keyPrefix, memberSeparator)
     end
 
     local isTerm = true

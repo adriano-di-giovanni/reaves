@@ -44,8 +44,6 @@ end
 local function insert(
     keyPrefix, isCaseSensitive, isUnique, memberSeparator, nullCharacter, minCreatedAt, maxCreatedAt, entityId, newValue, createdAt)
 
-    print('will-insert', entityId, newValue, createdAt)
-
     local NULL_ENTITY_ID = nullCharacter
     local NULL_VALUE = nullCharacter
 
@@ -77,8 +75,6 @@ local function insert(
 
         lastCreatedAt = v2
         lastValue = v1
-
-        print('last-insert', v0, lastValue, lastCreatedAt)
     end
 
     -- do not accept past values
@@ -243,8 +239,6 @@ local function insert(
         gateways.entityValueMap = entityValueMap
         changeTracker.entityValueMap = 1
     end
-
-    print('-did-insert', entityId, newValue, createdAt)
 
     return { entityId, newValue, createdAt }
 end

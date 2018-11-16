@@ -12,7 +12,7 @@ end
 
 function EntityIdIndex:buildMember(entityId, value, createdAt)
     local memberSeparator = self.memberSeparator
-    return createdAt .. memberSeparator .. entityId .. memberSeparator .. value
+    return entityId .. memberSeparator .. createdAt .. memberSeparator .. value
 end
 
 function EntityIdIndex:delete(entityId, value, createdAt)
@@ -52,12 +52,12 @@ function EntityIdIndex:searchRaw(aQuery, isTerm, from, to, order, offset, count)
     local max
     if (order == ORDER_ASCENDING) then
         command = 'ZRANGEBYLEX'
-        min = '[' .. from .. memberSeparator .. query
-        max = '[' .. to .. memberSeparator .. query .. TRAILING_BYTE
+        min = '[' .. query
+        max = '[' .. query .. TRAILING_BYTE
     else
         command = 'ZREVRANGEBYLEX'
-        min = '[' .. to .. memberSeparator .. query .. TRAILING_BYTE
-        max = '[' .. from .. memberSeparator .. query
+        min = '[' .. query .. TRAILING_BYTE
+        max = '[' .. query
     end
 
     if (offset ~= nil and count ~= nil) then
@@ -75,7 +75,7 @@ end
 
 function EntityIdIndex:unbuildMember(member)
     local memberSeparator = self.memberSeparator
-    local pattern = '^(%d+)' .. memberSeparator .. '(.+)' .. memberSeparator .. '(.+)$'
-    local createdAt, entityId, value = string.match(member, pattern)
+    local pattern = '^(.+)' .. memberSeparator .. '(%d+)' .. memberSeparator .. '(.+)$'
+    local entityId, createdAt, value = string.match(member, pattern)
     return entityId, value, tonumber(createdAt, 10)
 end
