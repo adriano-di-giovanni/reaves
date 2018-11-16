@@ -11,7 +11,12 @@
         "test:coverage": "npm run redis:start && jest --coverage --runInBand; npm run redis:stop",
         "docs": "rimraf docs && jsdoc --configure jsdoc.json"
     },
-    "keywords": [],
+    "keywords": [
+        "entity attribute value",
+        "event sourcing",
+        "event store",
+        "redis"
+    ],
     "author": "Adriano Di Giovanni <me@adrianodigiovanni.com> (http://adrianodigiovanni.com/)",
     "license": "MIT",
     "devDependencies": {
