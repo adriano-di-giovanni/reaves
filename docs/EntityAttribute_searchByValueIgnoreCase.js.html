@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>EntityAttribute/insert.js - Documentation</title>
+    <title>EntityAttribute/searchByValueIgnoreCase.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -31,7 +31,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">EntityAttribute/insert.js</h1>
+    <h1 class="page-title">EntityAttribute/searchByValueIgnoreCase.js</h1>
     
 
     
@@ -41,87 +41,84 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const { encode } = require('./CreatedAtUtil')
-const { MEMBER_SEPARATOR, NULL_CHARACTER } = require('./constants')
+            <pre class="prettyprint source linenums"><code>const { MEMBER_SEPARATOR, NULL_CHARACTER } = require('./constants')
 const createEvent = require('./createEvent')
 const getLoader = require('./getLoader')
 const v = require('./validate')
 
+// TODO: refactor to eliminate code duplication (searchByValue, searchByValueIgnoreCase).
+
 /**
- * Inserts a new event.
+ * Searches for events with a value either equal to the given value or starting with it, ignoring case.
  *
- * @function EntityAttribute#insert
- * @param {String} entityId The entity ID.
- * @param {?String} newValue The new value for the attribute.
- * @param {Number} [createdAt=Date.now()] The timestamp of the event.
- * It represents the number of milliseconds elapsed since January 1, 1970 00:00:00 UTC.
- * @param {Function} done The final callback. Invoked with `(err, event)`
- * @returns {Event} The newly created event. If the current value for the entity with the given ID
- * is the same as the new value, the returned event is related to the current value.
+ * @function EntityAttribute#searchByValueIgnoreCase
+ * @param {?String} value The given value.
+ * @param {('ascending'|'descending')} [order='ascending'] The order of the returned events.
+ * @param {Function} done
+ * @returns {Array.&lt;Event>} An array of matching events.
  */
-module.exports = function EntityAttribute$insert(entityId, aNewValue, aCreatedAt, aDone) {
-    let createdAt
+module.exports = function EntityAttribute$searchByValueIgnoreCase(value, aOrder, aDone) {
+    let order
     let done
 
-    if (typeof aCreatedAt === 'function') {
-        createdAt = Date.now()
-        done = aCreatedAt
+    if (typeof aOrder === 'function') {
+        order = 'ascending'
+        done = aOrder
     } else {
-        createdAt = aCreatedAt
+        order = aOrder
         done = aDone
     }
 
-    if (!v.callback(done, "argument 4, 'done'")) {
+    if (!v.callback(done, "argument 3, 'done'")) {
         throw v.lastError
     }
 
-    if (!v.entityId(entityId, "argument 1, 'entityId'")) {
-        done(v.lastError)
-        return
-    }
-
     const canBeNull = this._isNullable
-    if (!v.value(aNewValue, canBeNull, "argument 2, 'newValue'")) {
+    if (!v.value(value, canBeNull, "argument 1, 'value'")) {
         done(v.lastError)
         return
     }
 
-    if (!v.createdAt(createdAt, "argument 3, 'createdAt'")) {
+    if (!v.order(order, "argument 2, 'order'")) {
         done(v.lastError)
         return
     }
 
     const client = this._client
-    createdAt = encode(createdAt)
+    const isCaseSensitive = false
 
-    getLoader(client).load('insert', (err, sha) => {
+    getLoader(client).load('searchByValue', (err, sha) => {
         if (err) {
             done(err)
             return
         }
 
-        const newValue = aNewValue || NULL_CHARACTER
-
         client.evalsha(
             sha,
             0,
             this._keyPrefix,
-            this._isCaseSensitive,
-            this._isUnique,
+            isCaseSensitive,
             MEMBER_SEPARATOR,
-            NULL_CHARACTER,
-            entityId,
-            newValue,
-            createdAt,
+            value,
+            order,
             (err, reply) => {
                 if (err) {
                     done(err)
                     return
                 }
 
-                const [entityId, value, createdAt] = reply
+                // TODO: move to constructor
+                const transform = isCaseSensitive
+                    ? r => {
+                          const [value, createdAt, entityId] = r.split(MEMBER_SEPARATOR)
+                          return createEvent(NULL_CHARACTER, entityId, value, createdAt)
+                      }
+                    : r => {
+                          const [createdAt, entityId, value] = r.split(MEMBER_SEPARATOR).slice(1)
+                          return createEvent(NULL_CHARACTER, entityId, value, createdAt)
+                      }
 
-                done(null, createEvent(NULL_CHARACTER, entityId, value, createdAt))
+                done(null, reply.map(transform))
             }
         )
     })

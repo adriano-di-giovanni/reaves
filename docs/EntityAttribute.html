@@ -26,7 +26,7 @@
 
 <nav>
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EntityAttribute.html">EntityAttribute</a><ul class='methods'><li data-type='method'><a href="EntityAttribute.html#getByEntityId">getByEntityId</a></li><li data-type='method'><a href="EntityAttribute.html#getByValue">getByValue</a></li><li data-type='method'><a href="EntityAttribute.html#getEntityId">getEntityId</a></li><li data-type='method'><a href="EntityAttribute.html#getValue">getValue</a></li><li data-type='method'><a href="EntityAttribute.html#insert">insert</a></li><li data-type='method'><a href="EntityAttribute.html#searchByValue">searchByValue</a></li></ul></li><li><a href="Event.html">Event</a><ul class='methods'><li data-type='method'><a href="Event.html#equals">equals</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-reaves.html">reaves</a><ul class='methods'><li data-type='method'><a href="module-reaves.html#.createEntityAttribute">createEntityAttribute</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EntityAttribute.html">EntityAttribute</a><ul class='methods'><li data-type='method'><a href="EntityAttribute.html#getByEntityId">getByEntityId</a></li><li data-type='method'><a href="EntityAttribute.html#getByValue">getByValue</a></li><li data-type='method'><a href="EntityAttribute.html#getEntityId">getEntityId</a></li><li data-type='method'><a href="EntityAttribute.html#getValue">getValue</a></li><li data-type='method'><a href="EntityAttribute.html#insert">insert</a></li><li data-type='method'><a href="EntityAttribute.html#searchByValue">searchByValue</a></li><li data-type='method'><a href="EntityAttribute.html#searchByValueIgnoreCase">searchByValueIgnoreCase</a></li></ul></li><li><a href="Event.html">Event</a><ul class='methods'><li data-type='method'><a href="Event.html#equals">equals</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-reaves.html">reaves</a><ul class='methods'><li data-type='method'><a href="module-reaves.html#.createEntityAttribute">createEntityAttribute</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -75,7 +75,7 @@
 
     
 
-    <h4 class="name" id="getByEntityId"><span class="type-signature"></span>getByEntityId<span class="signature">(entityId, order, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
+    <h4 class="name" id="getByEntityId"><span class="type-signature"></span>getByEntityId<span class="signature">(entityId, order<span class="signature-attributes">opt</span>, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
 
     
 
@@ -153,7 +153,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -178,7 +182,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"><p>The given entity ID.</p></td>
@@ -204,7 +220,23 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'ascending'</code>
+                
+                </td>
             
 
             <td class="description last"><p>The order of the returned events.</p></td>
@@ -227,7 +259,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"><p>The final callback. Invoked with <code>(err, events)</code>.</p></td>
@@ -280,7 +324,7 @@ entity with the given ID.</p>
 
     
 
-    <h4 class="name" id="getByValue"><span class="type-signature"></span>getByValue<span class="signature">(value<span class="signature-attributes">nullable</span>, order, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
+    <h4 class="name" id="getByValue"><span class="type-signature"></span>getByValue<span class="signature">(value<span class="signature-attributes">nullable</span>, order<span class="signature-attributes">opt</span>, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
 
     
 
@@ -362,6 +406,8 @@ entity with the given ID.</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -397,6 +443,10 @@ entity with the given ID.</p>
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last"><p>The given value.</p></td>
         </tr>
@@ -423,6 +473,8 @@ entity with the given ID.</p>
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -430,6 +482,12 @@ entity with the given ID.</p>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    <code>'ascending'</code>
+                
+                </td>
             
 
             <td class="description last"><p>The order of the returned events.</p></td>
@@ -461,6 +519,10 @@ entity with the given ID.</p>
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"><p>The final callback. Invoked with <code>(err, events)</code>.</p></td>
@@ -1145,7 +1207,7 @@ is the same as the new value, the returned event is related to the current value
 
     
 
-    <h4 class="name" id="searchByValue"><span class="type-signature"></span>searchByValue<span class="signature">(value<span class="signature-attributes">nullable</span>, order, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
+    <h4 class="name" id="searchByValue"><span class="type-signature"></span>searchByValue<span class="signature">(value<span class="signature-attributes">nullable</span>, order<span class="signature-attributes">opt</span>, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
 
     
 
@@ -1227,6 +1289,8 @@ is the same as the new value, the returned event is related to the current value
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -1262,8 +1326,12 @@ is the same as the new value, the returned event is related to the current value
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
-            <td class="description last"></td>
+            <td class="description last"><p>The given value.</p></td>
         </tr>
 
     
@@ -1288,6 +1356,8 @@ is the same as the new value, the returned event is related to the current value
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -1295,6 +1365,12 @@ is the same as the new value, the returned event is related to the current value
                 </td>
             
 
+            
+                <td class="default">
+                
+                    <code>'ascending'</code>
+                
+                </td>
             
 
             <td class="description last"><p>The order of the returned events.</p></td>
@@ -1326,6 +1402,260 @@ is the same as the new value, the returned event is related to the current value
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>An array of matching events.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="Event.html">Event</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="searchByValueIgnoreCase"><span class="type-signature"></span>searchByValueIgnoreCase<span class="signature">(value<span class="signature-attributes">nullable</span>, order<span class="signature-attributes">opt</span>, done)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Event.html">Event</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="EntityAttribute_searchByValueIgnoreCase.js.html">EntityAttribute/searchByValueIgnoreCase.js</a>, <a href="EntityAttribute_searchByValueIgnoreCase.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Searches for events with a value either equal to the given value or starting with it, ignoring case.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The given value.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'ascending'</span>
+|
+
+<span class="param-type">'descending'</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'ascending'</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The order of the returned events.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>done</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"></td>
@@ -1392,7 +1722,7 @@ is the same as the new value, the returned event is related to the current value
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 16 2018 10:07:49 GMT+0100 (CET) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 16 2018 11:59:51 GMT+0100 (CET) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
