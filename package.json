@@ -1,6 +1,6 @@
 {
     "name": "reaves",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "A Javascript implementation of the Entity-Attribute-Value model and the event sourcing pattern for Node.js",
     "main": "lib/index.js",
     "scripts": {
