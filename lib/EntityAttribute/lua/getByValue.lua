@@ -1,4 +1,4 @@
-local function getByValue(keyPrefix, isCaseSensitive, memberSeparator, value, from, to, order)
+local function getByValue(keyPrefix, isCaseSensitive, memberSeparator, value, order)
     local gateway
     if (isCaseSensitive) then
         gateway = CaseSensitiveValueIndex:create(keyPrefix, memberSeparator)
@@ -7,7 +7,7 @@ local function getByValue(keyPrefix, isCaseSensitive, memberSeparator, value, fr
     end
 
     local isTerm = true
-    local fn = function() return gateway:searchRaw(value, isTerm, from, to, order) end
+    local fn = function() return gateway:searchRaw(value, isTerm, order) end
     local success, data = pcall(fn)
 
     if (not success) then
@@ -21,8 +21,6 @@ local keyPrefix = ARGV[1]
 local isCaseSensitive = ARGV[2] == 'true'
 local memberSeparator = ARGV[3]
 local value = ARGV[4]
-local from = ARGV[5]
-local to = ARGV[6]
-local order = ARGV[7]
+local order = ARGV[5]
 
-return getByValue(keyPrefix, isCaseSensitive, memberSeparator, value, from, to, order)
+return getByValue(keyPrefix, isCaseSensitive, memberSeparator, value, order)

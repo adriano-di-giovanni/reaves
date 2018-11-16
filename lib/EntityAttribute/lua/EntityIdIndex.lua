@@ -20,13 +20,13 @@ function EntityIdIndex:delete(entityId, value, createdAt)
     return redis.call('ZREM', self.key, member)
 end
 
-function EntityIdIndex:getMostRecent(aEntityId, from, to)
+function EntityIdIndex:getMostRecent(aEntityId)
     local query = aEntityId
     local isTerm = true
     local order = ORDER_DESCENDING
     local offset = 0
     local count = 1
-    local reply = self:searchRaw(query, isTerm, from, to, order, offset, count)
+    local reply = self:searchRaw(query, isTerm, order, offset, count)
     local member = reply[1]
     local entityId = nil
     local value = nil
@@ -39,7 +39,7 @@ function EntityIdIndex:getMostRecent(aEntityId, from, to)
     return entityId, value, createdAt
 end
 
-function EntityIdIndex:searchRaw(aQuery, isTerm, from, to, order, offset, count)
+function EntityIdIndex:searchRaw(aQuery, isTerm, order, offset, count)
     local query = aQuery
     local memberSeparator = self.memberSeparator
 

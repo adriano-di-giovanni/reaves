@@ -42,7 +42,7 @@ local function rollback(entityId, newValue, createdAt, lastValue, changeTracker,
 end
 
 local function insert(
-    keyPrefix, isCaseSensitive, isUnique, memberSeparator, nullCharacter, minCreatedAt, maxCreatedAt, entityId, newValue, createdAt)
+    keyPrefix, isCaseSensitive, isUnique, memberSeparator, nullCharacter, entityId, newValue, createdAt)
 
     local NULL_ENTITY_ID = nullCharacter
     local NULL_VALUE = nullCharacter
@@ -65,7 +65,7 @@ local function insert(
         gateways.entityIdIndex = entityIdIndex
 
         local fn = function()
-            return entityIdIndex:getMostRecent(entityId, minCreatedAt, maxCreatedAt)
+            return entityIdIndex:getMostRecent(entityId)
         end
         local success, v0, v1, v2 = pcall(fn)
 
@@ -106,7 +106,7 @@ local function insert(
         end
 
         local fn = function()
-            return valueIndex:getMostRecent(newValue, minCreatedAt, maxCreatedAt)
+            return valueIndex:getMostRecent(newValue)
         end
         local success, v0, v1, v2 = pcall(fn)
 
@@ -250,11 +250,9 @@ local isCaseSensitive = ARGV[2] == 'true'
 local isUnique = ARGV[3] == 'true'
 local memberSeparator = ARGV[4]
 local nullCharacter = ARGV[5]
-local minCreatedAt = tonumber(ARGV[6], 10)
-local maxCreatedAt = tonumber(ARGV[7], 10)
-local entityId = ARGV[8]
-local newValue = ARGV[9]
-local createdAt = tonumber(ARGV[10], 10)
+local entityId = ARGV[6]
+local newValue = ARGV[7]
+local createdAt = tonumber(ARGV[8], 10)
 
 return insert(
-    keyPrefix, isCaseSensitive, isUnique, memberSeparator, nullCharacter, minCreatedAt, maxCreatedAt, entityId, newValue, createdAt)
+    keyPrefix, isCaseSensitive, isUnique, memberSeparator, nullCharacter, entityId, newValue, createdAt)

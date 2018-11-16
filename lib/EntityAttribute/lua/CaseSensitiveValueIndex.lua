@@ -20,13 +20,13 @@ function CaseSensitiveValueIndex:delete(entityId, value, createdAt)
     return redis.call('ZREM', self.key, member)
 end
 
-function CaseSensitiveValueIndex:getMostRecent(value, from, to)
+function CaseSensitiveValueIndex:getMostRecent(value)
     local query = value
     local isTerm = true
     local order = ORDER_DESCENDING
     local offset = 0
     local count = 1
-    local reply = self:searchRaw(query, isTerm, from, to, order, offset, count)
+    local reply = self:searchRaw(query, isTerm, order, offset, count)
     local member = reply[1]
     local entityId = nil
     local createdAt = nil
@@ -40,7 +40,7 @@ function CaseSensitiveValueIndex:getMostRecent(value, from, to)
     return entityId, value, createdAt
 end
 
-function CaseSensitiveValueIndex:searchRaw(aQuery, isTerm, from, to, order, offset, count)
+function CaseSensitiveValueIndex:searchRaw(aQuery, isTerm, order, offset, count)
     local query = aQuery
     local memberSeparator = self.memberSeparator
 

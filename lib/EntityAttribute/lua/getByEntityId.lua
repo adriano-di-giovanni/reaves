@@ -1,7 +1,7 @@
-local function getByEntityId(keyPrefix, memberSeparator, entityId, from, to, order)
+local function getByEntityId(keyPrefix, memberSeparator, entityId, order)
     local gateway = EntityIdIndex:create(keyPrefix, memberSeparator, entityId)
     local isTerm = true
-    local fn = function() return gateway:searchRaw(entityId, isTerm, from, to, order) end
+    local fn = function() return gateway:searchRaw(entityId, isTerm, order) end
     local success, data = pcall(fn)
 
     if (not success) then
@@ -16,8 +16,6 @@ end
 local keyPrefix = ARGV[1]
 local memberSeparator = ARGV[2]
 local entityId = ARGV[3]
-local from = ARGV[4]
-local to = ARGV[5]
-local order = ARGV[6]
+local order = ARGV[4]
 
-return getByEntityId(keyPrefix, memberSeparator, entityId, from, to, order)
+return getByEntityId(keyPrefix, memberSeparator, entityId, order)
